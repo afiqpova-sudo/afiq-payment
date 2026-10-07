@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Afiq21 - Payment</title>
+<link rel="icon" href="https://i.ibb.co.com/Pz4J4rkQ/IMG-20261007-WA0095.jpg">
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', 'Poppins', sans-serif;
+}
+
+html, body {
+  min-height: 100vh;
+  overflow-x: hidden;
+  color: #fff;
+}
+
+body {
+  background: url('https://i.ibb.co.com/4gSCx3QV/9d836d35b8a0c7415e665c36d02fa599.jpg') center/cover fixed no-repeat;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(10,0,30,0.85), rgba(40,0,80,0.75), rgba(0,20,60,0.85));
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: -1;
+}
+
+/* ============ HALAMAN 1 : LANDING ============ */
+.page {
+  display: none;
+  min-height: 100vh;
+  animation: fadeIn 0.6s ease;
+}
+
+.page.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.landing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+  text-align: center;
+}
+
+.logo-wrap {
+  position: relative;
+  margin-bottom: 25px;
+}
+
+.logo-glow {
+  position: absolute;
+  inset: -20px;
+  background: radial-gradient(circle, #7b2ff7, #f107a3, transparent 70%);
+  filter: blur(30px);
+  opacity: 0.7;
+  animation: pulseGlow 3s ease-in-out infinite;
+  border-radius: 50%;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.1); }
+}
+
+.logo {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid rgba(255,255,255,0.2);
+  box-shadow: 0 0 40px #7b2ff7, 0 0 80px #f107a3;
+  position: relative;
+  z-index: 1;
+  animation: floatLogo 4s ease-in-out infinite;
+}
+
+@keyframes floatLogo {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.brand {
+  font-size: clamp(2.5rem, 8vw, 4.5rem);
+  font-weight: 900;
+  letter-spacing: 8px;
+  background: linear-gradient(90deg, #00f5ff, #b537f2, #ff1f8f, #00f5ff);
+  background-size: 300% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shineText 4s linear infinite;
+}
+
+@keyframes shineText {
+  to { background-position: 300% center; }
+}
+
+.sub {
+  font-size: 1rem;
+  letter-spacing: 4px;
+  color: #b8b8d1;
+  margin: 8px 0 50px;
+  text-transform: uppercase;
+}
+
+.btn-reveal {
+  position: relative;
+  padding: 22px 45px;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #fff;
+  background: linear-gradient(135deg, #7b2ff7, #f107a3);
+  border: none;
+  border-radius: 60px;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(241,7,163,0.5), 0 0 60px rgba(123,47,247,0.4);
+  transition: 0.3s;
+  animation: pulseBtn 2s ease-in-out infinite;
+}
+
+@keyframes pulseBtn {
+  0%, 100% { box-shadow: 0 10px 40px rgba(241,7,163,0.5), 0 0 60px rgba(123,47,247,0.4); }
+  50% { box-shadow: 0 15px 50px rgba(241,7,163,0.8), 0 0 90px rgba(123,47,247,0.7); }
+}
+
+.btn-reveal:hover {
+  transform: translateY(-3px) scale(1.03);
+}
+
+.btn-shine {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  animation: shineBtn 2.5s infinite;
+}
+
+@keyframes shineBtn {
+  0% { left: -100%; }
+  60%, 100% { left: 100%; }
+}
+
+.hint {
+  margin-top: 25px;
+  font-size: 0.85rem;
+  color: #9999bb;
+  letter-spacing: 1px;
+}
+
+/* ============ HALAMAN 2 : PAYMENT ============ */
+.pay-wrap {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 30px 20px 60px;
+}
+
+.pay-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 18px 22px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 20px;
+  backdrop-filter: blur(20px);
+  margin-bottom: 20px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+}
+
+.pay-header img {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  border: 2px solid #b537f2;
+  box-shadow: 0 0 20px rgba(181,55,242,0.6);
+}
+
+.pay-header h2 {
+  font-size: 1.3rem;
+  letter-spacing: 3px;
+  background: linear-gradient(90deg, #00f5ff, #b537f2);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 900;
+}
+
+.pay-header small {
+  color: #b8b8d1;
+  font-size: 0.75rem;
+}
+
+.dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: #00ff88;
+  border-radius: 50%;
+  margin-right: 4px;
+  box-shadow: 0 0 10px #00ff88;
+  animation: blink 1.5s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.back-btn {
+  display: inline-block;
+  margin-bottom: 20px;
+  color: #b8b8d1;
+  text-decoration: none;
+  font-size: 0.9rem;
+  padding: 8px 16px;
+  border-radius: 30px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.back-btn:hover {
+  color: #fff;
+  background: rgba(255,255,255,0.12);
+}
+
+.card {
+  padding: 22px;
+  margin-bottom: 18px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 22px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.35);
+  transition: 0.3s;
+  animation: slideUp 0.6s ease backwards;
+}
+
+.card:nth-of-type(1) { animation-delay: 0.1s; }
+.card:nth-of-type(2) { animation-delay: 0.25s; }
+.card:nth-of-type(3) { animation-delay: 0.4s; }
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(181,55,242,0.5);
+  box-shadow: 0 15px 50px rgba(181,55,242,0.35);
+}
+
+.card h3 {
+  font-size: 1.15rem;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+}
+
+.num {
+  font-size: 1.3rem;
+  font-weight: 700;
+  font-family: 'Courier New', monospace;
+  color: #00f5ff;
+  letter-spacing: 2px;
+  text-shadow: 0 0 15px rgba(0,245,255,0.5);
+  margin-bottom: 6px;
+}
+
+.name {
+  font-size: 0.9rem;
+  color: #b8b8d1;
+  margin-bottom: 12px;
+}
+
+.name strong { color: #ff1f8f; letter-spacing: 1px; }
+
+.desc {
+  font-size: 0.85rem;
+  color: #b8b8d1;
+  margin-bottom: 12px;
+}
+
+.qris-img {
+  width: 220px;
+  height: 220px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto 12px;
+  border-radius: 14px;
+  background: #fff;
+  padding: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 5px 25px rgba(0,0,0,0.4);
+}
+
+.qris-img:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 35px rgba(0,245,255,0.5);
+}
+
+.btn-copy {
+  display: inline-block;
+  padding: 10px 18px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #fff;
+  background: linear-gradient(135deg, #7b2ff7, #f107a3);
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 5px 20px rgba(241,7,163,0.4);
+}
+
+.btn-copy:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(241,7,163,0.7);
+}
+
+.btn-copy.copied {
+  background: linear-gradient(135deg, #00b894, #00cec9);
+}
+
+/* FORM */
+.form-input {
+  display: block;
+  width: 100%;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+  color: #fff;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 12px;
+  outline: none;
+  font-family: inherit;
+  transition: 0.3s;
+}
+
+.form-input::placeholder { color: #8888aa; }
+
+.form-input:focus {
+  border-color: #b537f2;
+  background: rgba(181,55,242,0.1);
+  box-shadow: 0 0 0 3px rgba(181,55,242,0.2);
+}
+
+.form-input option { background: #1a0a2e; color: #fff; }
+
+/* UPLOAD */
+.upload-box {
+  display: block;
+  width: 100%;
+  padding: 22px 16px;
+  margin-bottom: 10px;
+  background: rgba(255,255,255,0.04);
+  border: 2px dashed rgba(255,255,255,0.25);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: 0.3s;
+  text-align: center;
+}
+
+.upload-box:hover {
+  background: rgba(181,55,242,0.08);
+  border-color: #b537f2;
+}
+
+.upload-icon { font-size: 2rem; display: block; margin-bottom: 4px; }
+.upload-box strong { font-size: 0.9rem; display: block; }
+.upload-box small { font-size: 0.75rem; color: #8888aa; }
+
+.preview-wrap {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.preview-img {
+  width: 100%;
+  max-height: 280px;
+  object-fit: contain;
+  border-radius: 14px;
+  background: #1a0a2e;
+  padding: 8px;
+  border: 1px solid rgba(37,211,102,0.4);
+  box-shadow: 0 5px 25px rgba(37,211,102,0.25);
+}
+
+.btn-remove {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #fff;
+  background: rgba(241,7,163,0.85);
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: 0.3s;
+}
+
+.btn-remove:hover { background: #ff1f8f; }
+
+/* TOMBOL WA */
+.btn-wa {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 15px;
+  margin-top: 8px;
+  font-size: 0.9rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #fff;
+  background: linear-gradient(135deg, #25D366, #128C7E);
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 8px 25px rgba(37,211,102,0.4);
+  transition: 0.3s;
+}
+
+.btn-wa:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 35px rgba(37,211,102,0.6);
+}
+
+.btn-wa:active { transform: scale(0.98); }
+
+/* SALURAN */
+.channel {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  margin-top: 18px;
+  background: linear-gradient(135deg, rgba(37,211,102,0.15), rgba(18,140,126,0.15));
+  border: 1px solid rgba(37,211,102,0.4);
+  border-radius: 18px;
+  text-decoration: none;
+  color: #fff;
+  transition: 0.3s;
+  box-shadow: 0 5px 25px rgba(37,211,102,0.2);
+}
+
+.channel:hover {
+  transform: translateY(-3px);
+  background: linear-gradient(135deg, rgba(37,211,102,0.25), rgba(18,140,126,0.25));
+  box-shadow: 0 10px 35px rgba(37,211,102,0.5);
+}
+
+.channel span:first-child { font-size: 1.8rem; }
+.channel div { flex: 1; text-align: left; }
+.channel strong { color: #25D366; display: block; font-size: 0.95rem; }
+.channel small { color: #b8b8d1; font-size: 0.75rem; }
+.channel .arrow {
+  font-size: 1.5rem;
+  color: #25D366;
+  transition: 0.3s;
+}
+.channel:hover .arrow { transform: translateX(5px); }
+
+.footer {
+  text-align: center;
+  margin-top: 30px;
+  padding: 20px;
+  font-size: 0.85rem;
+  color: #8888aa;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.footer strong {
+  background: linear-gradient(90deg, #00f5ff, #b537f2);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* MODAL QRIS */
+.qr-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.92);
+  backdrop-filter: blur(10px);
+  z-index: 999;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  cursor: zoom-out;
+}
+
+.qr-modal.active { display: flex; animation: fadeIn 0.3s ease; }
+
+.qr-modal img {
+  max-width: 95vw;
+  max-height: 90vh;
+  border-radius: 20px;
+  background: #fff;
+  padding: 15px;
+  box-shadow: 0 0 80px rgba(0,245,255,0.6);
+}
+
+.close-x {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 3rem;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.close-x:hover { color: #ff1f8f; transform: rotate(90deg); }
+
+/* MOBILE */
+@media (max-width: 480px) {
+  .card { padding: 18px; }
+  .num { font-size: 1.1rem; }
+  .btn-reveal { padding: 18px 28px; font-size: 0.85rem; }
+  .qris-img { width: 180px; height: 180px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ================= HALAMAN 1 ================= -->
+<div class="page active" id="pageLanding">
+  <div class="landing">
+    <div class="logo-wrap">
+      <div class="logo-glow"></div>
+      <img src="https://i.ibb.co.com/Pz4J4rkQ/IMG-20261007-WA0095.jpg" alt="Logo" class="logo">
+    </div>
+
+    <h1 class="brand">AFIQ21</h1>
+    <p class="sub">Premium Payment Gateway</p>
+
+    <button class="btn-reveal" onclick="bukaPayment()">
+      KLIK DI SINI UNTUK MENAMPILKAN PAYMENT
+      <span class="btn-shine"></span>
+    </button>
+
+    <p class="hint">🔊 Musik akan diputar otomatis saat diklik</p>
+  </div>
+</div>
+
+<!-- ================= HALAMAN 2 ================= -->
+<div class="page" id="pagePayment">
+  <div class="pay-wrap">
+
+    <header class="pay-header">
+      <img src="https://i.ibb.co.com/Pz4J4rkQ/IMG-20261007-WA0095.jpg" alt="Logo">
+      <div>
+        <h2>AFIQ21</h2>
+        <small><span class="dot"></span> Pembayaran Aman</small>
+      </div>
+    </header>
+
+    <span class="back-btn" onclick="kembali()">← Kembali</span>
+
+    <!-- DANA -->
+    <div class="card">
+      <h3>💙 DANA</h3>
+      <p class="num">088216260212</p>
+      <p class="name">A/N : <strong>NURIDA</strong></p>
+      <button class="btn-copy" onclick="copyText('088216260212', this)">📋 Salin Nomor</button>
+    </div>
+
+    <!-- QRIS -->
+    <div class="card">
+      <h3>📱 QRIS</h3>
+      <p class="desc">Scan untuk bayar otomatis</p>
+      <img src="https://i.ibb.co.com/zT5HcMHV/qr-ID1024352973761-07-10-26-1791391566-1791391566653.jpg" alt="QRIS" class="qris-img" onclick="openQR()">
+      <button class="btn-copy" onclick="openQR()">🔍 Perbesar QRIS</button>
+    </div>
+
+    <!-- KONFIRMASI -->
+    <div class="card">
+      <h3>✅ Konfirmasi Pembayaran</h3>
+      <p class="desc">Isi data setelah transfer, otomatis ke WhatsApp Admin</p>
+
+      <input type="text" id="nama" class="form-input" placeholder="Nama Kamu">
+      <input type="text" id="produk" class="form-input" placeholder="Produk yang dibeli">
+      <input type="number" id="nominal" class="form-input" placeholder="Nominal Transfer">
+      <select id="metode" class="form-input">
+        <option value="DANA">DANA</option>
+        <option value="QRIS">QRIS</option>
+      </select>
+
+      <label for="bukti" class="upload-box" id="uploadBox">
+        <input type="file" id="bukti" accept="image/*" hidden onchange="previewBukti(event)">
+        <div id="uploadContent">
+          <span class="upload-icon">📸</span>
+          <strong>Upload Bukti Transfer</strong>
+          <small>Klik untuk pilih foto (max 5MB)</small>
+        </div>
+      </label>
+
+      <div class="preview-wrap" id="previewWrap" style="display:none;">
+        <img id="previewImg" class="preview-img" alt="Preview">
+        <button class="btn-remove" onclick="hapusBukti()">✖ Hapus</button>
+      </div>
+
+      <button class="btn-wa" onclick="kirimWA()">
+        💬 KIRIM KONFIRMASI KE WHATSAPP
+      </button>
+    </div>
+
+    <!-- SALURAN -->
+    <a href="https://whatsapp.com/channel/0029VbB8pGC4NVitFoAJJM3n" target="_blank" class="channel">
+      <span>📢</span>
+      <div>
+        <strong>Saluran Admin</strong>
+        <small>Testi & Info Terbaru</small>
+      </div>
+      <span class="arrow">→</span>
+    </a>
+
+    <footer class="footer">
+      © 2026 <strong>Afiq21</strong> — Terima kasih sudah berbelanja 🙏
+    </footer>
+
+  </div>
+</div>
+
+<!-- MODAL QRIS -->
+<div class="qr-modal" id="qrModal" onclick="closeQR()">
+  <span class="close-x">&times;</span>
+  <img src="https://i.ibb.co.com/zT5HcMHV/qr-ID1024352973761-07-10-26-1791391566-1791391566653.jpg" alt="QRIS">
+</div>
+
+<!-- AUDIO -->
+<audio id="bgMusic" loop>
+  <source src="https://files.catbox.moe/bnjirk.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+/* ============ KONFIG ============ */
+const WA_ADMIN = '6288983803976'; // nomor WA admin
+let buktiFile = null;
+
+/* ============ BUKA PAYMENT + MUSIK ============ */
+function bukaPayment() {
+  // Musik autoplay
+  const music = document.getElementById('bgMusic');
+  music.volume = 0.5;
+  music.play().catch(e => console.log('Audio error:', e));
+
+  // Pindah halaman
+  document.getElementById('pageLanding').classList.remove('active');
+  document.getElementById('pagePayment').classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ============ KEMBALI + STOP MUSIK ============ */
+function kembali() {
+  document.getElementById('bgMusic').pause();
+  document.getElementById('bgMusic').currentTime = 0;
+
+  document.getElementById('pagePayment').classList.remove('active');
+  document.getElementById('pageLanding').classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ============ COPY NOMOR DANA ============ */
+function copyText(text, btn) {
+  navigator.clipboard.writeText(text).then(() => {
+    const original = btn.innerHTML;
+    btn.innerHTML = '✅ Tersalin!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.innerHTML = original;
+      btn.classList.remove('copied');
+    }, 1500);
+  });
+}
+
+/* ============ ZOOM QRIS ============ */
+function openQR() {
+  document.getElementById('qrModal').classList.add('active');
+}
+
+function closeQR() {
+  document.getElementById('qrModal').classList.remove('active');
+}
+
+/* ============ UPLOAD BUKTI ============ */
+function previewBukti(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  if (file.size > 5 * 1024 * 1024) {
+    alert('⚠️ Ukuran file terlalu besar! Maksimal 5MB.');
+    event.target.value = '';
+    return;
+  }
+
+  buktiFile = file;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    document.getElementById('previewImg').src = e.target.result;
+    document.getElementById('previewWrap').style.display = 'block';
+    document.getElementById('uploadContent').style.display = 'none';
+    document.getElementById('uploadBox').style.borderColor = '#25D366';
+  };
+  reader.readAsDataURL(file);
+}
+
+function hapusBukti() {
+  buktiFile = null;
+  document.getElementById('bukti').value = '';
+  document.getElementById('previewWrap').style.display = 'none';
+  document.getElementById('uploadContent').style.display = 'block';
+  document.getElementById('uploadBox').style.borderColor = 'rgba(255,255,255,0.25)';
+}
+
+/* ============ KIRIM KE WHATSAPP ============ */
+function kirimWA() {
+  const nama = document.getElementById('nama').value.trim();
+  const produk = document.getElementById('produk').value.trim();
+  const nominal = document.getElementById('nominal').value.trim();
+  const metode = document.getElementById('metode').value;
+
+  if (!nama || !produk || !nominal) {
+    alert('⚠️ Isi semua data dulu ya!\n(Nama, Produk, Nominal)');
+    return;
+  }
+
+  const nominalRp = 'Rp ' + parseInt(nominal).toLocaleString('id-ID');
+
+  const now = new Date();
+  const waktu = now.toLocaleString('id-ID', {
+    day: '2-digit', month: 'long', year: 'numeric',
+    hour: '2-digit', minute: '2-digit'
+  });
+
+  const pesan = 
+`🔔 *KONFIRMASI PEMBAYARAN AFIQ21*
+━━━━━━━━━━━━━━━━━━━━
+👤 *Nama*     : ${nama}
+📦 *Produk*   : ${produk}
+💳 *Metode*   : ${metode}
+💰 *Nominal*  : ${nominalRp}
+🕐 *Waktu*    : ${waktu}
+━━━━━━━━━━━━━━━━━━━━
+${buktiFile ? '📸 *Bukti transfer akan saya kirim di chat ini*' : '⚠️ *Belum upload bukti transfer*'}
+✅ Mohon dicek ya admin 🙏`;
+
+  const url = `https://wa.me/${WA_ADMIN}?text=${encodeURIComponent(pesan)}`;
+  window.open(url, '_blank');
+
+  if (buktiFile) {
+    setTimeout(() => {
+      alert('✅ WhatsApp dibuka!\n\n📸 Jangan lupa *ATTACH foto bukti transfer* dari galeri kamu ya!');
+    }, 500);
+  }
+}
+
+/* ============ AUTO PAUSE saat pindah tab ============ */
+document.addEventListener('visibilitychange', () => {
+  const music = document.getElementById('bgMusic');
+  if (document.hidden) {
+    music.pause();
+  } else if (document.getElementById('pagePayment').classList.contains('active')) {
+    music.play().catch(()=>{});
+  }
+});
+</script>
+
+</body>
+</html>
